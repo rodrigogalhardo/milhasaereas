@@ -20,7 +20,8 @@ const vooSchema = new Schema(_schema);
 const VooModel = mongoose.model('Voo', vooSchema);
 
 const BASE_URL = 'http://book.latam.com/TAM/dyn/air/redemption/availability;'
-let jsessionid = 'IOEqg0cEtdolNg6cA8SbHSb7Rq6QoxgX4272JUK9w7gpJlRHVCj_!-215252347!-94134157?B_DATE_1=201608020000'
+let jsessionid = 'IOEqg0cEtdolNg6cA8SbHSb7Rq6QoxgX4272JUK9w7gpJlRHVCj_!-215252347!-94134157'
+let B_DATE_1 = '201608050000'
 let B_DATE_2 = '201608110000'
 let B_LOCATION_1 = 'CNF'
 let LANGUAGE = 'BR'
