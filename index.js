@@ -6,22 +6,23 @@ const BASE_URL = 'http://book.latam.com/TAM/dyn/air/redemption/availability;jses
 request(BASE_URL, function (error, response, html) {
   if (!error && response.statusCode == 200) {
     const voos = []
+    let counter = 0;
     var $ = cheerio.load(html)
     $('[class*=" flightType"]').each(function(i, element){
       const voo = {}
-      voo.de = $(this).children('.fromTh').text()
-      voo.para = $(this).children('.toTh').text()
-      voo.voo = $(this).children('.flightNumber .linkFlif').text()
-      voo.duracao = $(this).children('.durationTh').text()
-      voo.promo = $(this).children('.ff-EPROMOD').text();
-      voo.classico = $(this).children('.ff-ECLASSICOD').text()
-      voo.irrestrito = $(this).children('.ff-EIRRESTRID').text()
+      voo.de = $(this).children('.fromTh').text().trim()
+      voo.para = $(this).children('.toTh').text().trim()
+      voo.voo = $(this).children('.flightNumber .linkFlif').text().trim()
+      voo.duracao = $(this).children('.durationTh').text().trim()
+      voo.promo = $(this).children('.ff-EPROMOD').text().trim()
+      voo.classico = $(this).children('.ff-ECLASSICOD').text().trim()
+      voo.irrestrito = $(this).children('.ff-EIRRESTRID').text().trim()
       voos.push(voo)
+      counter = i
     })
-    console.log('voos', voos)
     fs.writeFile('voos.json', JSON.stringify(voos), (err) => {
       if (err) throw err;
-      console.log('It\'s saved!');
+      console.log('salvos '+counter+' voos!')
     });
   }
 });
