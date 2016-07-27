@@ -12,11 +12,12 @@ request(BASE_URL, function (error, response, html) {
       const voo = {}
       voo.de = $(this).children('.fromTh').text().trim()
       voo.para = $(this).children('.toTh').text().trim()
-      voo.voo = $(this).children('.flightNumber .linkFlif').text().trim()
+      voo.voo = $(this).children(".flightNumber").children("a").text()
       voo.duracao = $(this).children('.durationTh').text().trim()
       voo.promo = $(this).children('.ff-EPROMOD').text().trim()
       voo.classico = $(this).children('.ff-ECLASSICOD').text().trim()
       voo.irrestrito = $(this).children('.ff-EIRRESTRID').text().trim()
+      // console.log('voo.voo', voo.voo)
       voos.push(voo)
       counter = i
     })
