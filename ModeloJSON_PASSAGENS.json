@@ -1,0 +1,124 @@
+﻿{
+  "Status": {
+    "Alerta": [ ],
+    "Erro": false,
+    "Sucesso": true
+  },
+  "Busca": {
+    "Criancas": 0,
+    "Adultos": 1,
+    "TipoViagem": 1,
+    "Trechos": [
+      {
+        "DataIda": "13/04/2016",
+        "Destino": "GRU",
+        "DataVolta": "28/04/2016",
+        "Origem": "GIG"
+      }
+    ],
+    "Chave": "0f0e3771b19181ec985c9e61b0c53338ee4e7f38",
+    "Senha": "35335d9ace1639349db822631abe3d6d4880c049",
+    "TipoBusca": 1,
+    "Bebes": 0,
+    "Companhias": [ "tam" ]
+  },
+  "VoosIda": [
+    {
+      "Companhia": "TAM",
+      "TipoViagem": 1,
+      "Sentido": "Ida",
+      "Classe": "Top",
+      "NumeroVoo": "JJ3829",
+      "DataEmbarque": "13/04/2016",
+      "HoraEmbarque": "21:30",
+      "DataDesembarque": "21/04/2016",
+      "HoraDesembarque": "10:56",
+      "Duracao": "1:10",
+      "OrigemDePreco": "Milhas",
+      "PrecoAdulto": 0,
+      "PrecoCrianca": 0,
+      "PrecoBebe": 0,
+      "MilhasAdulto": 0,
+      "MilhasCrianca": 0,
+      "MilhasBebe": 0,
+      "TotalMilhas": 0,
+      "TotalPreco": 0,
+      "PrecoMilhas": 0, //Valor é igual ao MenorPreco
+      "PrecoBaixo": 0,
+      "TaxaDeEmbarque": 0, //Taxa de Embarque o valor é igual para crianca, adulto e bebe e para todos os voos que passam pelo aeroporto
+      "Conexoes": [
+        {
+          "DataEmbarque": "13/04/2016",
+          "HoraEmbarque": "21:30",
+          "DataDesembarque": "21/04/2016",
+          "HoraDesembarque": "10:56",
+          "AeroNave": "Airbus Industrie A321",
+          "Origem": "CWB",
+          "Destino": "GIG",
+          "NumeroVoo": "JJ3169"
+        },
+        {
+          "DataEmbarque": "13/04/2016",
+          "HoraEmbarque": "21:30",
+          "DataDesembarque": "21/04/2016",
+          "HoraDesembarque": "10:56",
+          "AeroNave": "Airbus Industrie A320",
+          "Origem": "GRU",
+          "Destino": "CWB",
+          "NumeroVoo": "JJ3334"
+        }
+      ],
+      "Extra": null //Informações extras do voo, ou observaçoes
+    },
+    {
+      "Companhia": "TAM",
+      "TipoViagem": 1,
+      "Sentido": "Volta",
+      "Classe": "Economica",
+      "NumeroVoo": "JJ3829",
+      "DataEmbarque": "13/04/2016",
+      "HoraEmbarque": "21:30",
+      "DataDesembarque": "21/04/2016",
+      "HoraDesembarque": "10:56",
+      "Duracao": "1:10",
+      "OrigemDePreco": "Cia",
+      "PrecoAdulto": 0,
+      "PrecoCrianca": 0,
+      "PrecoBebe": 0,
+      "MilhasAdulto": 0,
+      "MilhasCrianca": 0,
+      "MilhasBebe": 0,
+      "TotalMilhas": 0,
+      "TotalPreco": 0,
+      "PrecoMilhas": 0, //Valor é igual ao MenorPreco
+      "PrecoBaixo": 0,
+      "TaxaDeEmbarque": 0, //Taxa de Embarque o valor é igual para crianca, adulto e bebe e para todos os voos que passam pelo aeroporto
+      "Conexoes": [
+        {
+          "DataEmbarque": "13/04/2016",
+          "HoraEmbarque": "21:30",
+          "DataDesembarque": "21/04/2016",
+          "HoraDesembarque": "10:56",
+          "AeroNave": "Airbus Industrie A321",
+          "Origem": "CWB",
+          "Destino": "GIG",
+          "NumeroVoo": "JJ3169"
+        },
+        {
+          "DataEmbarque": "13/04/2016",
+          "HoraEmbarque": "21:30",
+          "DataDesembarque": "21/04/2016",
+          "HoraDesembarque": "10:56",
+          "AeroNave": "Airbus Industrie A320",
+          "Origem": "GRU",
+          "Destino": "CWB",
+          "NumeroVoo": "JJ3334"
+        }
+      ],
+      "Extra": null //Informações extras do voo, ou observaçoes
+    }
+  ],
+  "VoosVolta": [
+
+  ]
+}
