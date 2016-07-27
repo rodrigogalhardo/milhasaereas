@@ -118,9 +118,48 @@ router.get('/pegaVoos/buscar', function(req, res) {
 })
 
 
-router.get('/pegaVoos', function(req, res) {
+router.post('/pegaVoos', function(req, res) {
 
-  const BASE_URL = 'http://book.latam.com/TAM/dyn/air/redemption/availability;jsessionid=IOEqg0cEtdolNg6cA8SbHSb7Rq6QoxgX4272JUK9w7gpJlRHVCj_!-215252347!-94134157?B_DATE_1=201608020000&B_DATE_2=201608110000&B_LOCATION_1=CNF&LANGUAGE=BR&passenger_useMyPoints=true&WDS_MARKET=BR&children=0&E_LOCATION_1=BSB&SERVICE_ID=2&SITE=JJRDJJRD&COUNTRY_SITE=BR&WDS_AWARD_CORPORATE_CODE=&MARKETING_CABIN=E&adults=1&infants=0&TRIP_TYPE=R'
+  // const BASE_URL = 'http://book.latam.com/TAM/dyn/air/redemption/availability;jsessionid=IOEqg0cEtdolNg6cA8SbHSb7Rq6QoxgX4272JUK9w7gpJlRHVCj_!-215252347!-94134157?B_DATE_1=201608020000&B_DATE_2=201608110000&B_LOCATION_1=CNF&LANGUAGE=BR&passenger_useMyPoints=true&WDS_MARKET=BR&children=0&E_LOCATION_1=BSB&SERVICE_ID=2&SITE=JJRDJJRD&COUNTRY_SITE=BR&WDS_AWARD_CORPORATE_CODE=&MARKETING_CABIN=E&adults=1&infants=0&TRIP_TYPE=R'
+  // console.log('req.body', req.body)
+  const BASE_URL = 'http://book.latam.com/TAM/dyn/air/redemption/availability;'
+  let jsessionid = 'IOEqg0cEtdolNg6cA8SbHSb7Rq6QoxgX4272JUK9w7gpJlRHVCj_!-215252347!-94134157?B_DATE_1=201608020000'
+  let B_DATE_2 = req.body.B_DATE_2 || '201608110000'
+  let B_LOCATION_1 =  req.body.B_LOCATION_1 || 'CNF'
+  let LANGUAGE =  req.body.LANGUAGE || 'BR'
+  let passenger_useMyPoints = req.body.passenger_useMyPoints ||  true
+  let WDS_MARKET =  req.body.WDS_MARKET || 'BR'
+  let children = req.body.children ||  0
+  let E_LOCATION_1 =  req.body.E_LOCATION_1 || 'BSB'
+  let SERVICE_ID = req.body.SERVICE_ID ||  2
+  let SITE =  req.body.SITE || 'JJRDJJRD'
+  let COUNTRY_SITE =  req.body.COUNTRY_SITE || 'BR'
+  let WDS_AWARD_CORPORATE_CODE = req.body.WDS_AWARD_CORPORATE_CODE || ''
+  let MARKETING_CABIN =  req.body.MARKETING_CABIN || 'E'
+  let adults = req.body.adults ||  1
+  let infants = req.body.infants ||  0
+  let TRIP_TYPE =  req.body.TRIP_TYPE || 'R'
+
+  let URL_FULL = `${BASE_URL}jsessionid='${jsessionid}&
+                    B_DATE_2=${B_DATE_2}&
+                    B_LOCATION_1=${B_LOCATION_1}&
+                    LANGUAGE=${LANGUAGE}&
+                    passenger_useMyPoints=${passenger_useMyPoints}&
+                    WDS_MARKET=${WDS_MARKET}&
+                    children=${children}&
+                    E_LOCATION_1=${E_LOCATION_1}&
+                    SERVICE_ID=${SERVICE_ID}&
+                    SITE=${SITE}&
+                    COUNTRY_SITE=${COUNTRY_SITE}&
+                    WDS_AWARD_CORPORATE_CODE=${WDS_AWARD_CORPORATE_CODE}&
+                    MARKETING_CABIN=${MARKETING_CABIN}&
+                    adults=${adults}&
+                    infants=${infants}&
+                    TRIP_TYPE=${TRIP_TYPE}
+                    `.replace(/\s/g, "")
+
+  console.log('URL_FULL', URL_FULL)
+  console.log('Começando a busca no site')
   request(URL_FULL, function (error, response, html) {
     if (!error && response.statusCode == 200) {
       const voos = []
@@ -141,10 +180,10 @@ router.get('/pegaVoos', function(req, res) {
         VooModel.create(voo, (err, data) => {
           if(err) throw new Error(err)
           console.log('Cadastrado: ', data)
-          // res.render('voos', { voos: JSON.stringify(voos) });
         })
         // if(counter > 1) return true
       })
+      res.render('voos', { voos: JSON.stringify(voos) });
       // fs.writeFile('voos.json', JSON.stringify(voos), (err) => {
       //   if (err) throw err;
         console.log('salvos '+counter+' voos!')
