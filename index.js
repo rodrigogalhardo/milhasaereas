@@ -16,15 +16,7 @@ request(BASE_URL, function (error, response, html) {
       voo.promo = $(this).children('.ff-EPROMOD').text();
       voo.classico = $(this).children('.ff-ECLASSICOD').text()
       voo.irrestrito = $(this).children('.ff-EIRRESTRID').text()
-      console.log('voo', voo)
-      // console.log('para', voo.para)
-      // console.log('voo', voo.voo)
-      // console.log('duracao', voo.duracao)
-      // console.log('promo', voo.promo)
-      // console.log('classico', voo.classico)
-      // console.log('irrestrito', voo.irrestrito)
       voos.push(voo)
-      // if(i>1) return false;
     })
     console.log('voos', voos)
     fs.writeFile('voos.json', JSON.stringify(voos), (err) => {
