@@ -3,6 +3,8 @@ logs
 *.log
 npm-debug.log*
 
+api/node_modules
+
 # Runtime data
 pids
 *.pid
