@@ -27,7 +27,7 @@ request(BASE_URL, function (error, response, html) {
       // if(i>1) return false;
     })
     console.log('voos', voos)
-    fs.writeFile('voos.json', voos, (err) => {
+    fs.writeFile('voos.json', JSON.stringify(voos), (err) => {
       if (err) throw err;
       console.log('It\'s saved!');
     });
