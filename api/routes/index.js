@@ -2,11 +2,12 @@ const express = require('express')
 const router = express.Router()
 const request = require('request')
 const cheerio = require('cheerio')
+const circularJSON = require('circular-json');
 const fs = require('fs')
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 const _schema = {
-  tipo: String,
+  sentido: String,
   de: String,
   para: String,
   voo: String,
@@ -198,9 +199,9 @@ router.post('/pegaVoos/', function (req, res) {
       })
 
       function getflights (tableInBoundOutBound, typev) {
-        const voo = {}
         tableInBoundOutBound.each(function (i, element) {
-          voo.tipo = typev // voo de partida outbound_list_flight
+           const voo = {}
+          voo.sentido = typev // voo de partida outbound_list_flight
           voo.de = $(this).children('.fromTh').text().trim()
           voo.para = $(this).children('.toTh').text().trim()
           voo.voo = $(this).children('.flightNumber').children('a').text()
@@ -213,10 +214,11 @@ router.post('/pegaVoos/', function (req, res) {
           // voos.push(voo)
 
           // guarda no array principal
-          if (typev === 'ida')
+          if (typev === 'ida'){
             voosida.push(voos)
-          else if (typev === 'volta')
+          }else if (typev === 'volta'){
             voosvolta.push(voos)
+          }
 
           counter = i
           VooModel.create(voo, (err, data) => {
@@ -226,11 +228,11 @@ router.post('/pegaVoos/', function (req, res) {
         })
       }
 
-      voos.push(voosida);
-      voos.push(voosvolta);
-
-      console.dir(voos);
-      //res.json(voos)
+      
+      voos.push({"voosida":voosida});
+      voos.push({"voosvolta":voosvolta});
+      var objvoos = circularJSON.stringify(voos);
+      res.json(voos);
       //res.render('voos',  JSON.stringify(voos, function (key, value) {
       //  if (typeof value === 'object' && value !== null) {
       //    if (cache.indexOf(value) !== -1) {
@@ -245,7 +247,7 @@ router.post('/pegaVoos/', function (req, res) {
      // cache = []; // funciona garbage collection
       // fs.writeFile('voos.json', JSON.stringify(voos), (err) => {
       //   if (err) throw err
-      console.log('salvos ' + counter + ' voos!')
+      //console.log('salvos ' + counter + ' voos!')
     // })
     }
   })
