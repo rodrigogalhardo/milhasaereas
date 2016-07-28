@@ -2,7 +2,6 @@ const express = require('express')
 const router = express.Router()
 const request = require('request')
 const cheerio = require('cheerio')
-const circularJSON = require('circular-json');
 const fs = require('fs')
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
@@ -58,11 +57,8 @@ let URL_FULL = `${BASE_URL}jsessionid='${jsessionid}&
                   TRIP_TYPE=${TRIP_TYPE}
                   `.replace(/\s/g, '')
 
-console.log('URL_FULL', URL_FULL)
-
-/* GET home page. */
 router.get('/', function (req, res) {
-  res.render('index', { title: 'Express' })
+  res.render('index', { title: 'API para busca de voos' })
 })
 
 router.get('/pegaVoos/listar', function (req, res) {
@@ -114,27 +110,9 @@ router.get('/pegaVoos/buscar', function (req, res) {
 // })
 })
 
-router.post('/pegaVoos/', function (req, res) {
-  // http://book.latam.com/TAM/dyn/air/redemption/availability;jsessionid=V3UvCP25QH7KFS3nNDAvpF0wbGWSuAwfvsJC19ajFbek4IGv9G9C!-957067975!1955180264?
-  // B_DATE_1=201607290000&
-  // B_DATE_2=201608020000&
-  // B_LOCATION_1=CNF&
-  // LANGUAGE=BR&
-  // WDS_MARKET=BR&
-  // passenger_useMyPoints=true&
-  // children=0&
-  // E_LOCATION_1=BSB&
-  // SERVICE_ID=2&
-  // SITE=JJRDJJRD&
-  // COUNTRY_SITE=BR&
-  // WDS_AWARD_CORPORATE_CODE=&
-  // adults=1&
-  // infants=0&
-  // TRIP_TYPE=R
-
-  // console.log('req.body', req.body)
+router.post('/pegaVoos', function (req, res) {
   const BASE_URL = 'http://book.latam.com/TAM/dyn/air/redemption/availability;jsessionid=V3UvCP25QH7KFS3nNDAvpF0wbGWSuAwfvsJC19ajFbek4IGv9G9C!-957067975!1955180264?'
-  let jsessionid = 'IOEqg0cEtdolNg6cA8SbHSb7Rq6QoxgX4272JUK9w7gpJlRHVCj_!-215252347!-94134157'
+  // let jsessionid = 'IOEqg0cEtdolNg6cA8SbHSb7Rq6QoxgX4272JUK9w7gpJlRHVCj_!-215252347!-94134157'
   let B_DATE_1 = req.body.B_DATE_1 || '201608100000'
   let B_DATE_2 = req.body.B_DATE_2 || '201608220000'
   let B_LOCATION_1 = req.body.B_LOCATION_1 || 'GRU'
@@ -200,7 +178,7 @@ router.post('/pegaVoos/', function (req, res) {
 
       function getflights (tableInBoundOutBound, typev) {
         tableInBoundOutBound.each(function (i, element) {
-           const voo = {}
+          const voo = {}
           voo.sentido = typev // voo de partida outbound_list_flight
           voo.de = $(this).children('.fromTh').text().trim()
           voo.para = $(this).children('.toTh').text().trim()
@@ -209,46 +187,22 @@ router.post('/pegaVoos/', function (req, res) {
           voo.promo = $(this).children('.ff-EPROMOD').text().trim()
           voo.classico = $(this).children('.ff-ECLASSICOD').text().trim()
           voo.irrestrito = $(this).children('.ff-EIRRESTRID').text().trim()
-          // console.log('voo.voo', voo.voo)
 
-          // voos.push(voo)
-
-          // guarda no array principal
           if (typev === 'ida'){
-            voosida.push(voos)
-          }else if (typev === 'volta'){
-            voosvolta.push(voos)
+            voosida.push(voo)
+          } 
+          else if (typev === 'volta'){
+            voosvolta.push(voo)
           }
-
-          counter = i
-          VooModel.create(voo, (err, data) => {
-            if (err) throw new Error(err)
-            console.log('Cadastrado: ', data)
-          })
+          // VooModel.create(voo, (err, data) => {
+          //   if (err) throw new Error(err)
+          //   console.log('Cadastrado: ', data)
+          // })
         })
       }
-
-      
       voos.push({"voosida":voosida});
       voos.push({"voosvolta":voosvolta});
-      var objvoos = circularJSON.stringify(voos);
       res.json(voos);
-      //res.render('voos',  JSON.stringify(voos, function (key, value) {
-      //  if (typeof value === 'object' && value !== null) {
-      //    if (cache.indexOf(value) !== -1) {
-      //      // Circular reference found, discard key
-      //      return
-      //    }
-      //    // Store value in our collection
-      //    cache.push(value)
-      //  }
-     //   return value
-     // }));
-     // cache = []; // funciona garbage collection
-      // fs.writeFile('voos.json', JSON.stringify(voos), (err) => {
-      //   if (err) throw err
-      //console.log('salvos ' + counter + ' voos!')
-    // })
     }
   })
 })
